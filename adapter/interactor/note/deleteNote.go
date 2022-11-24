@@ -6,6 +6,7 @@ import (
 )
 
 type deleteNoteInteractor struct{}
+
 func NewDeleteNoteInteractor() deleteNoteInteractor {
   return deleteNoteInteractor{}
 }

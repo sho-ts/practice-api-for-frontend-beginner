@@ -6,6 +6,7 @@ import (
 )
 
 type findByNoteIdInteractor struct{}
+
 func NewFindByNoteIdInteractor() findByNoteIdInteractor {
   return findByNoteIdInteractor{}
 }

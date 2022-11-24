@@ -6,6 +6,7 @@ import (
 )
 
 type updateNoteInteractor struct{}
+
 func NewUpdateNoteInteractor() updateNoteInteractor {
   return updateNoteInteractor{}
 }
