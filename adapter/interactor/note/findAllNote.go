@@ -6,6 +6,7 @@ import (
 )
 
 type findAllNoteInteractor struct{}
+
 func NewFindAllNoteInteractor() findAllNoteInteractor {
   return findAllNoteInteractor{}
 }
