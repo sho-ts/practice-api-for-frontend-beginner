@@ -1,16 +1,25 @@
 package interactor
 
 import (
-  "note-app/domain/dto/input/note"
-  "note-app/domain/dto/output/note"
+	"note-app/domain/dto/input/note"
+	"note-app/domain/dto/output/note"
+	"note-app/repository"
 )
 
-type findByNoteIdInteractor struct{}
-
-func NewFindByNoteIdInteractor() findByNoteIdInteractor {
-  return findByNoteIdInteractor{}
+type findByNoteIdInteractor struct {
+	noteRepository repository.NoteRepository
 }
 
-func (i findByNoteIdInteractor) Handle(in input.FindByNoteIdInput) output.FindByNoteIdOutput {
-  
+func NewFindByNoteIdInteractor(
+	noteRepository repository.NoteRepository,
+) findByNoteIdInteractor {
+	return findByNoteIdInteractor{
+		noteRepository: noteRepository,
+	}
+}
+
+func (i findByNoteIdInteractor) Handle(in input.FindByNoteIdInput) (output.FindByNoteIdOutput, error) {
+	note, err := i.noteRepository.FindByNoteId(in.Id)
+
+	return output.NewFindByNoteIdOutput(note), err
 }
