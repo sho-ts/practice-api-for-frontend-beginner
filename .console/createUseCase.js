@@ -1,29 +1,29 @@
 const fs = require('fs');
 
 /** UseCase、Interactor、Input, Outputを作成する */
-module.exports = ([, dirName, structName]) => {
-  const fileName = `${dirName}/${structName}.go`;
-  const upperdStructName = structName.charAt(0).toUpperCase() + structName.slice(1);
+module.exports = ([dirName, useCaseName]) => {
+  const fileName = `${useCaseName}.go`;
+  const upperduUseCaseName = useCaseName.charAt(0).toUpperCase() + useCaseName.slice(1);
 
+  const useCaseDir = `./domain/useCase/${dirName}`;
   const interactorDir = `./adapter/interactor/${dirName}`;
-  const usecaseDir = `./domain/usecase/${dirName}`;
   const inputDir = `./domain/dto/input/${dirName}`;
   const outputDir = `./domain/dto/output/${dirName}`;
 
   // それぞれのファイルに書き込む内容を作成する
-  const usecaseValue = `package usecase\n\ntype I${upperdStructName}UseCase interface{\n  Handle()\n}`;
-  const interactorValue = `package interactor\n\ntype ${structName}Interactor struct{}\n\nfunc New${upperdStructName}Interactor() ${structName}Interactor {\n  return ${structName}Interactor{}\n}\n\nfunc (i ${structName}Interactor) Handle() {\n  \n}`;
-  const inputValue = `package input\n\ntype ${upperdStructName}Input struct{}\n\nfunc New${upperdStructName}Input() ${upperdStructName}Input {\n  return ${upperdStructName}Input{}\n}`;
-  const outputValue = `package output\n\ntype ${upperdStructName}Output struct{}\n\nfunc New${upperdStructName}Output() ${upperdStructName}Output {\n  return ${upperdStructName}Output{}\n}`;
+  const useCaseValue = `package useCase\n\nimport (\n  "note-app/domain/dto/input/${dirName}"\n  "note-app/domain/dto/output/${dirName}"\n)\n\ntype I${upperduUseCaseName}UseCase interface{\n  Handle(input.${upperduUseCaseName}Input) output.${upperduUseCaseName}Output\n}`;
+  const interactorValue = `package interactor\nimport (\n  "note-app/domain/dto/input/${dirName}"\n  "note-app/domain/dto/output/${dirName}"\n)\ntype ${useCaseName}Interactor struct{}\nfunc New${upperduUseCaseName}Interactor() ${useCaseName}Interactor {\n  return ${useCaseName}Interactor{}\n}\nfunc (i ${useCaseName}Interactor) Handle(in input.${upperduUseCaseName}Input) output.${upperduUseCaseName}Output {\n  \n}`;
+  const inputValue = `package input\n\ntype ${upperduUseCaseName}Input struct{}\n\nfunc New${upperduUseCaseName}Input() ${upperduUseCaseName}Input {\n  return ${upperduUseCaseName}Input{}\n}`;
+  const outputValue = `package output\n\ntype ${upperduUseCaseName}Output struct{}\n\nfunc New${upperduUseCaseName}Output() ${upperduUseCaseName}Output {\n  return ${upperduUseCaseName}Output{}\n}`;
 
   // ディレクトリがない場合、作成
+  fs.existsSync(useCaseDir) || fs.mkdirSync(useCaseDir)
   fs.existsSync(interactorDir) || fs.mkdirSync(interactorDir)
-  fs.existsSync(usecaseDir) || fs.mkdirSync(usecaseDir)
   fs.existsSync(inputDir) || fs.mkdirSync(inputDir)
   fs.existsSync(outputDir) || fs.mkdirSync(outputDir)
 
-  fs.writeFileSync(`./adapter/interactor/${fileName}`, interactorValue);
-  fs.writeFileSync(`./domain/usecase/${fileName}`, usecaseValue);
-  fs.writeFileSync(`./domain/dto/input/${fileName}`, inputValue);
-  fs.writeFileSync(`./domain/dto/output/${fileName}`, outputValue);
+  fs.writeFileSync(`./${useCaseDir}/${fileName}`, useCaseValue);
+  fs.writeFileSync(`./${interactorDir}/${fileName}`, interactorValue);
+  fs.writeFileSync(`./${inputDir}/${fileName}`, inputValue);
+  fs.writeFileSync(`./${outputDir}/${fileName}`, outputValue);
 }

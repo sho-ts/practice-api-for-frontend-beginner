@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 /** RepositoryのInterfaceと構造体を作成する */
-module.exports = ([, tableName]) => {
+module.exports = ([tableName]) => {
   const fileName = `${tableName}.go`;
   const upperdTableName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
 
