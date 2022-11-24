@@ -12,3 +12,12 @@ services:
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     volumes:
       - ./.db:/var/lib/mysql
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "8002:8080"
+    volumes:
+      - ./docs/swagger.yml:/openapi.yaml
+    environment:
+      SWAGGER_JSON: /openapi.yaml
