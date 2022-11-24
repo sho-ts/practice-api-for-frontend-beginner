@@ -1,0 +1,101 @@
+openapi: 3.0.3
+info:
+  title: API Document
+  version: 1.0.0
+paths:
+  /v1/note/{noteId}:
+    get:
+      tags:
+        - Note
+      summary: FindByNoteId
+      parameters:
+        - in: path
+          name: noteId
+          required: true
+          schema:
+            type: string
+      description: ノートを取得する
+      operationId: getPetById
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: DD37959ACDA842E7BCD74899DB4DBB85
+                  title:
+                    type: string
+                    example: ノートタイトル
+                  content:
+                    type: string
+                    example: これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。
+                  createdAt:
+                    type: string
+                    example: 2022-10-10 10:10:10
+        '404':
+          description: コンテンツが見つかりませんでした
+    put:
+      tags:
+        - Note
+      summary: UpdateNote
+      description: ノートを更新する
+      operationId: updateNote
+      parameters:
+        - in: path
+          name: noteId
+          required: true
+          schema:
+            type: string
+        - name: title
+          in: query
+          description: ノートタイトル
+          schema:
+            type: string
+        - name: content
+          in: query
+          description: 本文
+          schema:
+            type: string
+      responses:
+        '405':
+          description: 入力内容に問題があります
+    delete:
+      tags:
+        - Note
+      summary: DeleteNote
+      description: ノートを削除する
+      operationId: deleteNote
+      parameters:
+        - in: path
+          name: noteId
+          required: true
+          schema:
+            type: string
+      responses:
+        '500':
+          description: 削除に失敗しました
+  /v1/note:
+    post:
+      tags:
+        - Note
+      summary: CreateNote
+      description: ノートを作成する
+      operationId: createNote
+      parameters:
+        - name: title
+          in: query
+          description: ノートタイトル
+          schema:
+            type: string
+        - name: content
+          in: query
+          description: 本文
+          schema:
+            type: string
+      responses:
+        '405':
+          description: 入力内容に問題があります
