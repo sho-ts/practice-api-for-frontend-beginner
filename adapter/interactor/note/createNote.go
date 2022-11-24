@@ -12,5 +12,5 @@ func NewCreateNoteInteractor() createNoteInteractor {
 }
 
 func (i createNoteInteractor) Handle(in input.CreateNoteInput) output.CreateNoteOutput {
-  
+    return output.CreateNoteOutput{}
 }

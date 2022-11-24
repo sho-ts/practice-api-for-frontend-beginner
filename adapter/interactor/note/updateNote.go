@@ -12,5 +12,5 @@ func NewUpdateNoteInteractor() updateNoteInteractor {
 }
 
 func (i updateNoteInteractor) Handle(in input.UpdateNoteInput) output.UpdateNoteOutput {
-  
+  return output.UpdateNoteOutput{}
 }

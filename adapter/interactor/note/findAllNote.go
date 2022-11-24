@@ -12,5 +12,5 @@ func NewFindAllNoteInteractor() findAllNoteInteractor {
 }
 
 func (i findAllNoteInteractor) Handle(in input.FindAllNoteInput) output.FindAllNoteOutput {
-  
+  return output.FindAllNoteOutput{}
 }
