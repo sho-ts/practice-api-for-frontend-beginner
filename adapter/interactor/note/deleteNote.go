@@ -12,5 +12,5 @@ func NewDeleteNoteInteractor() deleteNoteInteractor {
 }
 
 func (i deleteNoteInteractor) Handle(in input.DeleteNoteInput) output.DeleteNoteOutput {
-  
+  return output.DeleteNoteOutput{}
 }

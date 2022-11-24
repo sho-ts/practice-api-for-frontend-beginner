@@ -1,4 +1,4 @@
-package useCase
+package usecase
 
 import (
   "note-app/domain/dto/input/note"

@@ -1,7 +1,11 @@
 package input
 
-type FindByNoteIdInput struct{}
+type FindByNoteIdInput struct {
+	Id string
+}
 
-func NewFindByNoteIdInput() FindByNoteIdInput {
-  return FindByNoteIdInput{}
+func NewFindByNoteIdInput(id string) FindByNoteIdInput {
+	return FindByNoteIdInput{
+		Id: id,
+	}
 }
