@@ -10,4 +10,6 @@ var nr = r.NewNoteRepository()
 
 var NoteController = c.NewNoteController(
 	ni.NewFindByNoteIdInteractor(nr),
+	ni.NewFindAllNoteInteractor(nr),
+  ni.NewCreateNoteInteractor(nr),
 )

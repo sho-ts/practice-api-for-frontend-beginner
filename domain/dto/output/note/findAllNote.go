@@ -1,7 +1,17 @@
 package output
 
-type FindAllNoteOutput struct{}
+import (
+	"note-app/domain/entity"
+)
 
-func NewFindAllNoteOutput() FindAllNoteOutput {
-  return FindAllNoteOutput{}
+type FindAllNoteOutput struct {
+	Items []entity.Note `json:"items"`
+}
+
+func NewFindAllNoteOutput(
+	items []entity.Note,
+) FindAllNoteOutput {
+	return FindAllNoteOutput{
+		Items: items,
+	}
 }
