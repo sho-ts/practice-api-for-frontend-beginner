@@ -37,7 +37,7 @@ func (nc noteController) CreateNote(c *gin.Context) {
 	o, o_err := nc.createNoteUseCase.Handle(i)
 
 	if o_err != nil {
-		c.JSON(500, gin.H{
+		c.JSON(405, gin.H{
 			"messege": o_err.Error(),
 		})
 		return
@@ -65,7 +65,7 @@ func (nc noteController) FindAllNote(c *gin.Context) {
 	offset, o_err := object.NewOffset(c.Query("offset"))
 
 	if l_err != nil || o_err != nil {
-		c.JSON(500, gin.H{
+		c.JSON(405, gin.H{
 			"messege": "クエリパラメータに問題があります",
 		})
 		return
