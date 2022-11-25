@@ -10,16 +10,40 @@ import (
 type noteController struct {
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase
 	findAllNoteUseCase  usecase.IFindAllNoteUseCase
+	createNoteUseCase   usecase.ICreateNoteUseCase
 }
 
 func NewNoteController(
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase,
 	findAllNoteUseCase usecase.IFindAllNoteUseCase,
+	createNoteUseCase usecase.ICreateNoteUseCase,
 ) noteController {
 	return noteController{
 		findByNoteIdUseCase: findByNoteIdUseCase,
 		findAllNoteUseCase:  findAllNoteUseCase,
+		createNoteUseCase:   createNoteUseCase,
 	}
+}
+
+func (nc noteController) CreateNote(c *gin.Context) {
+	var rb struct {
+		Title   string `json:"title"`
+		Content string `json:"content"`
+	}
+
+	c.ShouldBindJSON(&rb)
+
+	i := input.NewCreateNoteInput(rb.Title, rb.Content)
+	o, o_err := nc.createNoteUseCase.Handle(i)
+
+	if o_err != nil {
+		c.JSON(500, gin.H{
+			"messege": o_err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, o.Note)
 }
 
 func (nc noteController) FindByNoteId(c *gin.Context) {
@@ -33,12 +57,12 @@ func (nc noteController) FindByNoteId(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, o)
+	c.JSON(200, o.Note)
 }
 
 func (nc noteController) FindAllNote(c *gin.Context) {
-  limit, l_err := object.NewLimit(c.Query("limit"))
-  offset, o_err := object.NewOffset(c.Query("offset"))
+	limit, l_err := object.NewLimit(c.Query("limit"))
+	offset, o_err := object.NewOffset(c.Query("offset"))
 
 	if l_err != nil || o_err != nil {
 		c.JSON(500, gin.H{

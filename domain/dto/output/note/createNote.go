@@ -1,7 +1,13 @@
 package output
 
-type CreateNoteOutput struct{}
+import "note-app/domain/entity"
 
-func NewCreateNoteOutput() CreateNoteOutput {
-  return CreateNoteOutput{}
+type CreateNoteOutput struct {
+	Note entity.Note
+}
+
+func NewCreateNoteOutput(note entity.Note) CreateNoteOutput {
+	return CreateNoteOutput{
+		Note: note,
+	}
 }

@@ -2,6 +2,7 @@ package repository
 
 import (
 	"note-app/domain/entity"
+	"note-app/infrastructure/db/schema"
 )
 
 type NoteRepository struct {
@@ -14,6 +15,24 @@ func NewNoteRepository() NoteRepository {
 	}
 }
 
+func (n NoteRepository) CreateNote(id string, title string, content string) (entity.Note, error) {
+	note := schema.Note{
+		Id:      id,
+		Title:   title,
+		Content: content,
+	}
+
+	r := Repository.Create(&note)
+
+	return entity.Note{
+		Id:        note.Id,
+		Title:     note.Title,
+		Content:   note.Content,
+		CreatedAt: note.CreatedAt,
+		UpdatedAt: note.UpdatedAt,
+	}, r.Error
+}
+
 func (n NoteRepository) FindByNoteId(id string) (entity.Note, error) {
 	var note = entity.Note{}
 
@@ -24,6 +43,7 @@ func (n NoteRepository) FindByNoteId(id string) (entity.Note, error) {
 			"title as Title",
 			"content as Content",
 			"created_at as CreatedAt",
+			"updated_at as UpdatedAt",
 		}).
 		Where("id = ?", id).
 		First(&note)
@@ -42,9 +62,10 @@ func (n NoteRepository) FindAllNote(limit int, offset int) ([]entity.Note, error
 			"title as Title",
 			"content as Content",
 			"created_at as CreatedAt",
+			"updated_at as UpdatedAt",
 		}).
-    Limit(limit).
-    Offset(offset).
+		Limit(limit).
+		Offset(offset).
 		Scan(&notes)
 
 	return notes, r.Error
