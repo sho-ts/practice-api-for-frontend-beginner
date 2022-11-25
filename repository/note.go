@@ -1,6 +1,8 @@
 package repository
 
-import "note-app/domain/entity"
+import (
+	"note-app/domain/entity"
+)
 
 type NoteRepository struct {
 	table string
@@ -27,4 +29,23 @@ func (n NoteRepository) FindByNoteId(id string) (entity.Note, error) {
 		First(&note)
 
 	return note, r.Error
+}
+
+func (n NoteRepository) FindAllNote(limit int, offset int) ([]entity.Note, error) {
+	var notes = []entity.Note{}
+
+	r := Repository.
+		Debug().
+		Table(n.table).
+		Select([]string{
+			"id as Id",
+			"title as Title",
+			"content as Content",
+			"created_at as CreatedAt",
+		}).
+    Limit(limit).
+    Offset(offset).
+		Scan(&notes)
+
+	return notes, r.Error
 }

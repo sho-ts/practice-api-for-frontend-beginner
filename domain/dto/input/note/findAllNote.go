@@ -1,7 +1,20 @@
 package input
 
-type FindAllNoteInput struct{}
+import (
+  "note-app/domain/object"
+)
 
-func NewFindAllNoteInput() FindAllNoteInput {
-  return FindAllNoteInput{}
+type FindAllNoteInput struct {
+	Limit  object.Limit
+	Offset object.Offset
+}
+
+func NewFindAllNoteInput(
+	limit object.Limit,
+	offset object.Offset,
+) FindAllNoteInput {
+	return FindAllNoteInput{
+		Limit:  limit,
+		Offset: offset,
+	}
 }
