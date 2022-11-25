@@ -18,6 +18,6 @@ services:
     ports:
       - "8002:8080"
     volumes:
-      - ./docs/swagger.yml:/openapi.yaml
+      - ./doc/swagger.yml:/swagger.yml
     environment:
-      SWAGGER_JSON: /openapi.yaml
+      SWAGGER_JSON: /swagger.yml
