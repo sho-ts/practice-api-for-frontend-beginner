@@ -4,7 +4,7 @@ services:
   mysql:
     image: mysql:8.0
     ports:
-      - 3306:3306
+      - 13306:3306
     environment:
       - MYSQL_DATABASE=note-app
       - MYSQL_ROOT_PASSWORD=password
@@ -16,7 +16,7 @@ services:
     image: swaggerapi/swagger-ui
     container_name: "swagger-ui"
     ports:
-      - "8002:8080"
+      - "18081:8080"
     volumes:
       - ./doc/swagger.yml:/swagger.yml
     environment:
