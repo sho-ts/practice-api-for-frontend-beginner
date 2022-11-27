@@ -6,5 +6,5 @@ import (
 )
 
 type IUpdateNoteUseCase interface{
-  Handle(input.UpdateNoteInput) output.UpdateNoteOutput
+  Handle(input.UpdateNoteInput) (output.UpdateNoteOutput, error)
 }

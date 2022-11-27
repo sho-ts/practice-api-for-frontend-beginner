@@ -8,22 +8,25 @@ import (
 )
 
 type noteController struct {
+	createNoteUseCase   usecase.ICreateNoteUseCase
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase
 	findAllNoteUseCase  usecase.IFindAllNoteUseCase
-	createNoteUseCase   usecase.ICreateNoteUseCase
+  updateNoteUseCase usecase.IUpdateNoteUseCase
 	deleteNoteUseCase   usecase.IDeleteNoteUseCase
 }
 
 func NewNoteController(
+	createNoteUseCase usecase.ICreateNoteUseCase,
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase,
 	findAllNoteUseCase usecase.IFindAllNoteUseCase,
-	createNoteUseCase usecase.ICreateNoteUseCase,
+  updateNoteUseCase usecase.IUpdateNoteUseCase,
 	deleteNoteUseCase usecase.IDeleteNoteUseCase,
 ) noteController {
 	return noteController{
+		createNoteUseCase:   createNoteUseCase,
 		findByNoteIdUseCase: findByNoteIdUseCase,
 		findAllNoteUseCase:  findAllNoteUseCase,
-		createNoteUseCase:   createNoteUseCase,
+    updateNoteUseCase: updateNoteUseCase,
 		deleteNoteUseCase:   deleteNoteUseCase,
 	}
 }
@@ -37,11 +40,11 @@ func (nc noteController) CreateNote(c *gin.Context) {
 	c.ShouldBindJSON(&rb)
 
 	i := input.NewCreateNoteInput(rb.Title, rb.Content)
-	o, o_err := nc.createNoteUseCase.Handle(i)
+	o, err := nc.createNoteUseCase.Handle(i)
 
-	if o_err != nil {
+	if err != nil {
 		c.JSON(405, gin.H{
-			"messege": o_err.Error(),
+			"messege": err.Error(),
 		})
 		return
 	}
@@ -87,15 +90,41 @@ func (nc noteController) FindAllNote(c *gin.Context) {
 	c.JSON(200, o)
 }
 
-func (nc noteController) DeleteNote(c *gin.Context) {
-  i := input.NewDeleteNoteInput(c.Param("id"))
-  o, err := nc.deleteNoteUseCase.Handle(i)
+func (nc noteController) UpdateNote(c *gin.Context) {
+	var rb struct {
+		Title   string `json:"title"`
+		Content string `json:"content"`
+	}
 
-  if (err != nil) {
-    c.JSON(500, gin.H{
-      "message": "削除に失敗しました",
+	c.ShouldBindJSON(&rb)
+
+	i := input.NewUpdateNoteInput(
+		c.Param("id"),
+		rb.Title,
+		rb.Content,
+	)
+  o, err := nc.updateNoteUseCase.Handle(i)
+
+  if err != nil {
+    c.JSON(405, gin.H{
+      "message": err.Error(),
     })
+    return
   }
 
   c.JSON(200, o)
+}
+
+func (nc noteController) DeleteNote(c *gin.Context) {
+	i := input.NewDeleteNoteInput(c.Param("id"))
+	o, err := nc.deleteNoteUseCase.Handle(i)
+
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "削除に失敗しました",
+		})
+    return
+	}
+
+	c.JSON(200, o)
 }

@@ -37,7 +37,7 @@ func (n NoteRepository) FindByNoteId(id string) (entity.Note, error) {
 	var note = entity.Note{}
 
 	r := Repository.
-    Debug().
+		Debug().
 		Table(n.table).
 		Select([]string{
 			"id as Id",
@@ -47,7 +47,7 @@ func (n NoteRepository) FindByNoteId(id string) (entity.Note, error) {
 			"updated_at as UpdatedAt",
 		}).
 		Where("id = ?", id).
-    Where("deleted_at is null").
+		Where("deleted_at is null").
 		First(&note)
 
 	return note, r.Error
@@ -65,7 +65,7 @@ func (n NoteRepository) FindAllNote(limit int, offset int) ([]entity.Note, error
 			"created_at as CreatedAt",
 			"updated_at as UpdatedAt",
 		}).
-    Where("deleted_at is null").
+		Where("deleted_at is null").
 		Limit(limit).
 		Offset(offset).
 		Scan(&notes)
@@ -73,10 +73,24 @@ func (n NoteRepository) FindAllNote(limit int, offset int) ([]entity.Note, error
 	return notes, r.Error
 }
 
+func (n NoteRepository) UpdateNote(id string, title string, content string) error {
+	var note schema.Note
+
+	r := Repository.Model(&note).
+		Where("id = ?", id).
+		Where("deleted_at is null").
+		Updates(schema.Note{
+			Title:   title,
+			Content: content,
+		})
+
+	return r.Error
+}
+
 func (n NoteRepository) DeleteNote(id string) error {
 	r := Repository.
 		Where("id = ?", id).
 		Delete(&schema.Note{})
 
-  return r.Error
+	return r.Error
 }
