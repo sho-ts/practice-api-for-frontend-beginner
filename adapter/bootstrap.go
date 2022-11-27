@@ -12,4 +12,5 @@ var NoteController = c.NewNoteController(
 	ni.NewFindByNoteIdInteractor(nr),
 	ni.NewFindAllNoteInteractor(nr),
   ni.NewCreateNoteInteractor(nr),
+  ni.NewDeleteNoteInteractor(nr),
 )

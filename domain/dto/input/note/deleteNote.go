@@ -1,7 +1,13 @@
 package input
 
-type DeleteNoteInput struct{}
+type DeleteNoteInput struct {
+	Id string
+}
 
-func NewDeleteNoteInput() DeleteNoteInput {
-  return DeleteNoteInput{}
+func NewDeleteNoteInput(
+	id string,
+) DeleteNoteInput {
+	return DeleteNoteInput{
+		Id: id,
+	}
 }

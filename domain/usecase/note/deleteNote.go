@@ -6,5 +6,5 @@ import (
 )
 
 type IDeleteNoteUseCase interface{
-  Handle(input.DeleteNoteInput) output.DeleteNoteOutput
+  Handle(input.DeleteNoteInput) (output.DeleteNoteOutput, error)
 }

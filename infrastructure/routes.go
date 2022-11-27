@@ -8,10 +8,11 @@ import (
 func GetRouter() *gin.Engine {
 	r := gin.Default()
 
-	p := r.Group("/v1")
-	p.GET("/note", a.NoteController.FindAllNote)
-	p.POST("/note", a.NoteController.CreateNote)
-	p.GET("/note/:id", a.NoteController.FindByNoteId)
+	v1 := r.Group("/v1")
+	v1.GET("/note", a.NoteController.FindAllNote)
+	v1.POST("/note", a.NoteController.CreateNote)
+	v1.GET("/note/:id", a.NoteController.FindByNoteId)
+	v1.DELETE("/note/:id", a.NoteController.DeleteNote)
 
 	return r
 }
