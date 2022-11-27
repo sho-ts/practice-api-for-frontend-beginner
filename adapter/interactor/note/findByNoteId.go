@@ -3,15 +3,15 @@ package interactor
 import (
 	"note-app/domain/dto/input/note"
 	"note-app/domain/dto/output/note"
-	"note-app/repository"
+	"note-app/domain/repository"
 )
 
 type findByNoteIdInteractor struct {
-	noteRepository repository.NoteRepository
+	noteRepository repository.INoteRepository
 }
 
 func NewFindByNoteIdInteractor(
-	noteRepository repository.NoteRepository,
+	noteRepository repository.INoteRepository,
 ) findByNoteIdInteractor {
 	return findByNoteIdInteractor{
 		noteRepository: noteRepository,
