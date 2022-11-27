@@ -37,7 +37,6 @@ func (n NoteRepository) FindByNoteId(id string) (entity.Note, error) {
 	var note = entity.Note{}
 
 	r := Repository.
-		Debug().
 		Table(n.table).
 		Select([]string{
 			"id as Id",
