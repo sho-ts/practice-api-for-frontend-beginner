@@ -1,7 +1,7 @@
 package input
 
 import (
-  "note-app/domain/object"
+	"note-app/domain/object"
 )
 
 type FindAllNoteInput struct {

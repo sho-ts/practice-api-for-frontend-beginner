@@ -14,7 +14,7 @@ func NewOffset(q string, limit Limit) (Offset, error) {
 	}
 
 	r, err := strconv.Atoi(q)
-  
-  // SQLのOffsetは0からなので1を引いておく
+
+	// SQLのOffsetは0からなので1を引いておく
 	return Offset{Value: (r - 1) * limit.Value}, err
 }

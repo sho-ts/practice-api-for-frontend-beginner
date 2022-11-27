@@ -21,17 +21,17 @@ func NewCreateNoteInteractor(
 }
 
 func (i createNoteInteractor) Handle(in input.CreateNoteInput) (output.CreateNoteOutput, error) {
-  title, t_err := object.NewNoteTitle(in.Title)
+	title, t_err := object.NewNoteTitle(in.Title)
 
 	if t_err != nil {
 		return output.CreateNoteOutput{}, t_err
 	}
 
-  content, c_err := object.NewNoteContent(in.Content)
+	content, c_err := object.NewNoteContent(in.Content)
 
-  if c_err != nil {
-    return output.CreateNoteOutput{}, c_err
-  }
+	if c_err != nil {
+		return output.CreateNoteOutput{}, c_err
+	}
 
 	note, n_err := entity.NewNote(title, content)
 

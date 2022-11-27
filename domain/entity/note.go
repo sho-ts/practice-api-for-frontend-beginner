@@ -1,8 +1,8 @@
 package entity
 
 import (
+	"note-app/domain/object"
 	"time"
-  "note-app/domain/object"
 )
 
 type Note struct {
@@ -10,13 +10,13 @@ type Note struct {
 	Title     string    `json:"title"`
 	Content   string    `json:"content"`
 	CreatedAt time.Time `json:"createdAt"`
-  UpdatedAt time.Time `json:"updatedAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 func NewNote(title object.NoteTitle, content object.NoteContent) (Note, error) {
 	var note Note
 
-  note.Id = object.NewNoteId().Value
+	note.Id = object.NewNoteId().Value
 	note.Title = title.Value
 	note.Content = content.Value
 
