@@ -4,6 +4,7 @@ import (
 	"note-app/domain/dto/input/note"
 	"note-app/domain/dto/output/note"
 	"note-app/domain/entity"
+	"note-app/domain/object"
 	"note-app/domain/repository"
 )
 
@@ -20,7 +21,19 @@ func NewCreateNoteInteractor(
 }
 
 func (i createNoteInteractor) Handle(in input.CreateNoteInput) (output.CreateNoteOutput, error) {
-	note, n_err := entity.NewNote(in.Title, in.Content)
+  title, t_err := object.NewNoteTitle(in.Title)
+
+	if t_err != nil {
+		return output.CreateNoteOutput{}, t_err
+	}
+
+  content, c_err := object.NewNoteContent(in.Content)
+
+  if c_err != nil {
+    return output.CreateNoteOutput{}, c_err
+  }
+
+	note, n_err := entity.NewNote(title, content)
 
 	if n_err != nil {
 		return output.CreateNoteOutput{}, n_err
