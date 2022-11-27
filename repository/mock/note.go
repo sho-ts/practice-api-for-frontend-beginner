@@ -36,7 +36,7 @@ func (r MockNoteRepository) FindAllNote(
 
   for i := 0; i < limit; i++ {
     mockNotes[i] = entity.Note{
-      Id:      "mock-note-id" + strconv.Itoa(i),
+      Id:      "mock-note-id-" + strconv.Itoa(i),
       Title:   "mock-note-title",
       Content: "mock-note-content",
     }
