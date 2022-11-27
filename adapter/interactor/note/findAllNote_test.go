@@ -13,7 +13,7 @@ func TestFindAllNote(t *testing.T) {
 	interactor := interactor.NewFindAllNoteInteractor(repository.NewMockNoteRepository())
 
 	limit, _ := object.NewLimit("10")
-	offset, _ := object.NewOffset("1")
+	offset, _ := object.NewOffset("1", limit)
 	var total int64 = 100
 
 	in := input.NewFindAllNoteInput(limit, offset)
