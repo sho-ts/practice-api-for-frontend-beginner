@@ -69,7 +69,7 @@ func (nc noteController) FindByNoteId(c *gin.Context) {
 
 func (nc noteController) FindAllNote(c *gin.Context) {
 	limit, l_err := object.NewLimit(c.Query("limit"))
-	offset, o_err := object.NewOffset(c.Query("offset"))
+	offset, o_err := object.NewOffset(c.Query("offset"), limit)
 
 	if l_err != nil || o_err != nil {
 		c.JSON(405, gin.H{

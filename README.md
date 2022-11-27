@@ -1,18 +1,54 @@
 # 🐱フロントエンド開発を頑張りたい人に向けた練習用バックエンドAPI🐱
 
-## docker起動
+## 起動前に
+- dockerとgoをお使いのPCにインストールしてください
+- env.exampleの名前を.envに変更してください
+- 各エンドポイントの詳細はSwaggerに記載しています
+
+## PORT
+
+### API
+
+```
+localhost:18080
+```
+
+### Swagger
+
+```
+localhost:180081
+```
+
+### MySQL
+
+```
+localhost:13306
+```
+
+
+## コマンド
+
+### docker 起動
 
 ```sh
 docker-compose up -d
 ```
 
-## 停止
+### docker 停止
 
 ```sh
 docker-compose down
 ```
 
-## 以下開発用コンソール
+### API 起動
+
+```sh
+go run main.go
+```
+
+---
+
+## 以下 API 開発用コンソール
 
 ### UseCase 作成
 

@@ -1,4 +1,4 @@
-package infrastructure
+package router
 
 import (
 	"github.com/gin-gonic/gin"
@@ -7,6 +7,7 @@ import (
 
 func GetRouter() *gin.Engine {
 	r := gin.Default()
+  r.Use(GetCorsConfig())
 	v1 := r.Group("/v1")
 
 	v1.GET("/note", a.NoteController.FindAllNote)

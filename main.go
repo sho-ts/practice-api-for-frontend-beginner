@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	"note-app/infrastructure"
+	"note-app/infrastructure/router"
 	"note-app/infrastructure/db"
 	r "note-app/repository"
 )
@@ -13,5 +13,5 @@ func init() {
 
 func main() {
 	r.Repository = db.GetConnection()
-	infrastructure.GetRouter().Run()
+	router.GetRouter().Run()
 }

@@ -3,22 +3,119 @@ info:
   title: API Document
   version: 1.0.0
 paths:
-  /v1/note/{noteId}:
+  /v1/note:
     get:
       tags:
         - Note
-      summary: FindByNoteId
+      summary: FindAllNote
       parameters:
-        - in: path
-          name: noteId
-          required: true
+        - in: query
+          name: limit
+          description: 取得件数（最大50）
+          required: false
           schema:
-            type: string
-      description: ノートを取得する
-      operationId: getPetById
+            type: number
+        - in: query
+          description: 取得件数を指定している場合、何ページ目から取得するか
+          name: offset
+          required: false
+          schema:
+            type: number
+      description: ノートの一覧を取得する
+      operationId: findAllNote
       responses:
         '200':
-          description: successful operation
+          content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    items:
+                      type: array
+                      items:
+                        oneOf:
+                          - type: object
+                            properties:
+                              id:
+                                type: string
+                                example: DD37959ACDA842E7BCD74899DB4DBB85
+                              title:
+                                type: string
+                                example: ノートタイトル
+                              content:
+                                type: string
+                                example: これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。
+                              createdAt:
+                                type: string
+                                example: 2022-11-25T13:43:14.962Z
+                              updatedAt:
+                                type: string
+                                example: 2022-11-25T13:43:14.962Z
+                          - type: object
+                            properties:
+                              id:
+                                type: string
+                                example: DD37959ACDA842E7BCD74899DB4DBB85
+                              title:
+                                type: string
+                                example: ノートタイトル
+                              content:
+                                type: string
+                                example: これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。
+                              createdAt:
+                                type: string
+                                example: 2022-11-25T13:43:14.962Z
+                              updatedAt:
+                                type: string
+                                example: 2022-11-25T13:43:14.962Z
+                          - type: object
+                            properties:
+                              id:
+                                type: string
+                                example: DD37959ACDA842E7BCD74899DB4DBB85
+                              title:
+                                type: string
+                                example: ノートタイトル
+                              content:
+                                type: string
+                                example: これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。
+                              createdAt:
+                                type: string
+                                example: 2022-11-25T13:43:14.962Z
+                              updatedAt:
+                                type: string
+                                example: 2022-11-25T13:43:14.962Z
+                    total:
+                      description: トータル件数
+                      type: number
+                      example: 100
+        '405':
+          description: クエリパラメータに問題があります
+        '500':
+          description: エラーが発生しました
+    post:
+      tags:
+        - Note
+      summary: CreateNote
+      description: ノートを作成する
+      operationId: createNote
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                description: ノートタイトル（120文字以内）
+                type: string
+                example: これはタイトルです。これはタイトルです。これはタイトルです。
+              content:
+                description: ノートタイトル（100000文字以内）
+                type: string
+                example: これは本文です。これは本文です。これは本文です。
+      responses:
+        '200':
           content:
             application/json:
               schema:
@@ -35,7 +132,47 @@ paths:
                     example: これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。
                   createdAt:
                     type: string
-                    example: 2022-10-10 10:10:10
+                    example: 2022-11-25T13:43:14.962Z
+                  updatedAt:
+                    type: string
+                    example: 2022-11-25T13:43:14.962Z
+        '405':
+          description: titleは必須です
+  /v1/note/{noteId}:
+    get:
+      tags:
+        - Note
+      summary: FindByNoteId
+      parameters:
+        - in: path
+          name: noteId
+          required: true
+          schema:
+            type: string
+      description: ノートを取得する
+      operationId: findByNoteId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: DD37959ACDA842E7BCD74899DB4DBB85
+                  title:
+                    type: string
+                    example: ノートタイトル
+                  content:
+                    type: string
+                    example: これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。これは本文です。
+                  createdAt:
+                    type: string
+                    example: 2022-11-25T13:43:14.962Z
+                  updatedAt:
+                    type: string
+                    example: 2022-11-25T13:43:14.962Z
         '404':
           description: コンテンツが見つかりませんでした
     put:
@@ -50,19 +187,32 @@ paths:
           required: true
           schema:
             type: string
-        - name: title
-          in: query
-          description: ノートタイトル
+        - name: body
+          in: body
+          required: true
           schema:
-            type: string
-        - name: content
-          in: query
-          description: 本文
-          schema:
-            type: string
+            type: object
+            properties:
+              title:
+                description: ノートタイトル（120文字以内）
+                type: string
+                example: これはタイトルです。これはタイトルです。これはタイトルです。
+              content:
+                description: ノートタイトル（100000文字以内）
+                type: string
+                example: これは本文です。これは本文です。これは本文です。
       responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: DD37959ACDA842E7BCD74899DB4DBB85
         '405':
-          description: 入力内容に問題があります
+          description: titleは必須です
     delete:
       tags:
         - Note
@@ -76,26 +226,14 @@ paths:
           schema:
             type: string
       responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: DD37959ACDA842E7BCD74899DB4DBB85
         '500':
-          description: 削除に失敗しました
-  /v1/note:
-    post:
-      tags:
-        - Note
-      summary: CreateNote
-      description: ノートを作成する
-      operationId: createNote
-      parameters:
-        - name: title
-          in: query
-          description: ノートタイトル
-          schema:
-            type: string
-        - name: content
-          in: query
-          description: 本文
-          schema:
-            type: string
-      responses:
-        '405':
-          description: 入力内容に問題があります
+          description: エラーが発生しました
