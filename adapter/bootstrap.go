@@ -9,8 +9,9 @@ import (
 var nr = r.NewNoteRepository()
 
 var NoteController = c.NewNoteController(
+	ni.NewCreateNoteInteractor(nr),
 	ni.NewFindByNoteIdInteractor(nr),
 	ni.NewFindAllNoteInteractor(nr),
-  ni.NewCreateNoteInteractor(nr),
-  ni.NewDeleteNoteInteractor(nr),
+	ni.NewUpdateNoteInteractor(nr),
+	ni.NewDeleteNoteInteractor(nr),
 )

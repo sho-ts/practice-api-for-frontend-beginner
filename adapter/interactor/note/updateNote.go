@@ -1,16 +1,38 @@
 package interactor
 
 import (
-  "note-app/domain/dto/input/note"
-  "note-app/domain/dto/output/note"
+	"note-app/domain/dto/input/note"
+	"note-app/domain/dto/output/note"
+  "note-app/domain/object"
+	"note-app/repository"
 )
 
-type updateNoteInteractor struct{}
-
-func NewUpdateNoteInteractor() updateNoteInteractor {
-  return updateNoteInteractor{}
+type updateNoteInteractor struct {
+	noteRepository repository.NoteRepository
 }
 
-func (i updateNoteInteractor) Handle(in input.UpdateNoteInput) output.UpdateNoteOutput {
-  return output.UpdateNoteOutput{}
+func NewUpdateNoteInteractor(
+	noteRepository repository.NoteRepository,
+) updateNoteInteractor {
+	return updateNoteInteractor{
+		noteRepository: noteRepository,
+	}
+}
+
+func (i updateNoteInteractor) Handle(in input.UpdateNoteInput) (output.UpdateNoteOutput, error) {
+  title, t_err := object.NewNoteTitle(in.Title)
+
+	if t_err != nil {
+		return output.UpdateNoteOutput{}, t_err
+	}
+
+  content, c_err := object.NewNoteContent(in.Content)
+
+  if c_err != nil {
+    return output.UpdateNoteOutput{}, c_err
+  }
+
+	err := i.noteRepository.UpdateNote(in.Id, title.Value, content.Value)
+
+	return output.NewUpdateNoteOutput(in.Id), err
 }

@@ -1,7 +1,13 @@
 package output
 
-type UpdateNoteOutput struct{}
+type UpdateNoteOutput struct {
+	Id string `json:"id"`
+}
 
-func NewUpdateNoteOutput() UpdateNoteOutput {
-  return UpdateNoteOutput{}
+func NewUpdateNoteOutput(
+	id string,
+) UpdateNoteOutput {
+	return UpdateNoteOutput{
+		Id: id,
+	}
 }
