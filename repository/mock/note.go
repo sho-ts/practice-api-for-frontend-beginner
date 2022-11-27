@@ -8,7 +8,7 @@ import (
 type MockNoteRepository struct{}
 
 func NewMockNoteRepository() MockNoteRepository {
-  return MockNoteRepository{}
+	return MockNoteRepository{}
 }
 
 func (r MockNoteRepository) CreateNote(
@@ -31,30 +31,30 @@ func (r MockNoteRepository) FindByNoteId(id string) (entity.Note, error) {
 
 func (r MockNoteRepository) FindAllNote(
 	limit int, offset int,
-) ([]entity.Note, error) {
-  var mockNotes = make([]entity.Note, limit)
+) ([]entity.Note, int64, error) {
+	var mockNotes = make([]entity.Note, limit)
 
-  for i := 0; i < limit; i++ {
-    mockNotes[i] = entity.Note{
-      Id:      "mock-note-id-" + strconv.Itoa(i),
-      Title:   "mock-note-title",
-      Content: "mock-note-content",
-    }
-  }
+	for i := 0; i < limit; i++ {
+		mockNotes[i] = entity.Note{
+			Id:      "mock-note-id-" + strconv.Itoa(i),
+			Title:   "mock-note-title",
+			Content: "mock-note-content",
+		}
+	}
 
-  return mockNotes, nil
+	return mockNotes, 100, nil
 }
 
 func (r MockNoteRepository) UpdateNote(
-  id string,
-  title string,
-  content string,
+	id string,
+	title string,
+	content string,
 ) error {
-  return nil
+	return nil
 }
 
 func (r MockNoteRepository) DeleteNote(
-  id string,
+	id string,
 ) error {
-  return nil
+	return nil
 }

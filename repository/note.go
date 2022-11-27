@@ -53,10 +53,11 @@ func (n NoteRepository) FindByNoteId(id string) (entity.Note, error) {
 	return note, r.Error
 }
 
-func (n NoteRepository) FindAllNote(limit int, offset int) ([]entity.Note, error) {
+func (n NoteRepository) FindAllNote(limit int, offset int) ([]entity.Note, int64, error) {
 	var notes = []entity.Note{}
+	var total int64
 
-	r := Repository.
+	q := Repository.
 		Table(n.table).
 		Select([]string{
 			"id as Id",
@@ -65,12 +66,15 @@ func (n NoteRepository) FindAllNote(limit int, offset int) ([]entity.Note, error
 			"created_at as CreatedAt",
 			"updated_at as UpdatedAt",
 		}).
-		Where("deleted_at is null").
+		Where("deleted_at is null")
+
+	q.Count(&total)
+	r := q.
 		Limit(limit).
 		Offset(offset).
 		Scan(&notes)
 
-	return notes, r.Error
+	return notes, total, r.Error
 }
 
 func (n NoteRepository) UpdateNote(id string, title string, content string) error {

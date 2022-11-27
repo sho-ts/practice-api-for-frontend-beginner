@@ -19,7 +19,7 @@ func NewFindAllNoteInteractor(
 }
 
 func (i findAllNoteInteractor) Handle(in input.FindAllNoteInput) (output.FindAllNoteOutput, error) {
-	notes, err := i.noteRepository.FindAllNote(in.Limit.Value, in.Offset.Value)
+	notes, total, err := i.noteRepository.FindAllNote(in.Limit.Value, in.Offset.Value)
 
-	return output.NewFindAllNoteOutput(notes), err
+	return output.NewFindAllNoteOutput(notes, total), err
 }
