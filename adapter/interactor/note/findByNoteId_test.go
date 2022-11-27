@@ -9,12 +9,12 @@ import (
 )
 
 func TestFindByNoteId(t *testing.T) {
-  interactor := interactor.NewFindByNoteIdInteractor(repository.NewMockNoteRepository())
+	interactor := interactor.NewFindByNoteIdInteractor(repository.NewMockNoteRepository())
 
-  id := "test_id"
+	id := "test_id"
 
-  in := input.NewFindByNoteIdInput(id)
-  out, _ := interactor.Handle(in)
+	in := input.NewFindByNoteIdInput(id)
+	out, _ := interactor.Handle(in)
 
-  assert.Equal(t, out.Note.Id, id)
+	assert.Equal(t, out.Note.Id, id)
 }

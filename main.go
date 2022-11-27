@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	"note-app/infrastructure/router"
 	"note-app/infrastructure/db"
+	"note-app/infrastructure/router"
 	r "note-app/repository"
 )
 
