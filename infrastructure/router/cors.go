@@ -1,4 +1,4 @@
-package infrastructure
+package router
 
 import (
 	"github.com/gin-contrib/cors"
