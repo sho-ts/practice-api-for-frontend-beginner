@@ -1,7 +1,13 @@
 package output
 
-type DeleteNoteOutput struct{}
+type DeleteNoteOutput struct {
+	Id string `json:"id"`
+}
 
-func NewDeleteNoteOutput() DeleteNoteOutput {
-  return DeleteNoteOutput{}
+func NewDeleteNoteOutput(
+	id string,
+) DeleteNoteOutput {
+	return DeleteNoteOutput{
+		Id: id,
+	}
 }

@@ -11,17 +11,20 @@ type noteController struct {
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase
 	findAllNoteUseCase  usecase.IFindAllNoteUseCase
 	createNoteUseCase   usecase.ICreateNoteUseCase
+	deleteNoteUseCase   usecase.IDeleteNoteUseCase
 }
 
 func NewNoteController(
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase,
 	findAllNoteUseCase usecase.IFindAllNoteUseCase,
 	createNoteUseCase usecase.ICreateNoteUseCase,
+	deleteNoteUseCase usecase.IDeleteNoteUseCase,
 ) noteController {
 	return noteController{
 		findByNoteIdUseCase: findByNoteIdUseCase,
 		findAllNoteUseCase:  findAllNoteUseCase,
 		createNoteUseCase:   createNoteUseCase,
+		deleteNoteUseCase:   deleteNoteUseCase,
 	}
 }
 
@@ -82,4 +85,17 @@ func (nc noteController) FindAllNote(c *gin.Context) {
 	}
 
 	c.JSON(200, o)
+}
+
+func (nc noteController) DeleteNote(c *gin.Context) {
+  i := input.NewDeleteNoteInput(c.Param("id"))
+  o, err := nc.deleteNoteUseCase.Handle(i)
+
+  if (err != nil) {
+    c.JSON(500, gin.H{
+      "message": "削除に失敗しました",
+    })
+  }
+
+  c.JSON(200, o)
 }
