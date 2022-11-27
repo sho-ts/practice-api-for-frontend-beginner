@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"note-app/application/constant"
 	input "note-app/domain/dto/input/note"
 	"note-app/domain/object"
 	"note-app/domain/usecase/note"
@@ -11,7 +12,7 @@ type noteController struct {
 	createNoteUseCase   usecase.ICreateNoteUseCase
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase
 	findAllNoteUseCase  usecase.IFindAllNoteUseCase
-  updateNoteUseCase usecase.IUpdateNoteUseCase
+	updateNoteUseCase   usecase.IUpdateNoteUseCase
 	deleteNoteUseCase   usecase.IDeleteNoteUseCase
 }
 
@@ -19,14 +20,14 @@ func NewNoteController(
 	createNoteUseCase usecase.ICreateNoteUseCase,
 	findByNoteIdUseCase usecase.IFindByNoteIdUseCase,
 	findAllNoteUseCase usecase.IFindAllNoteUseCase,
-  updateNoteUseCase usecase.IUpdateNoteUseCase,
+	updateNoteUseCase usecase.IUpdateNoteUseCase,
 	deleteNoteUseCase usecase.IDeleteNoteUseCase,
 ) noteController {
 	return noteController{
 		createNoteUseCase:   createNoteUseCase,
 		findByNoteIdUseCase: findByNoteIdUseCase,
 		findAllNoteUseCase:  findAllNoteUseCase,
-    updateNoteUseCase: updateNoteUseCase,
+		updateNoteUseCase:   updateNoteUseCase,
 		deleteNoteUseCase:   deleteNoteUseCase,
 	}
 }
@@ -58,7 +59,7 @@ func (nc noteController) FindByNoteId(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(404, gin.H{
-			"messege": "コンテンツが見つかりませんでした",
+			"messege": constant.MESSAGE_NOT_FOUND,
 		})
 		return
 	}
@@ -72,7 +73,7 @@ func (nc noteController) FindAllNote(c *gin.Context) {
 
 	if l_err != nil || o_err != nil {
 		c.JSON(405, gin.H{
-			"messege": "クエリパラメータに問題があります",
+			"messege": constant.MESSAGE_HAS_QUERY_VALUE_PROBLEM,
 		})
 		return
 	}
@@ -82,7 +83,7 @@ func (nc noteController) FindAllNote(c *gin.Context) {
 
 	if i_err != nil {
 		c.JSON(500, gin.H{
-			"messege": "エラーが発生しました",
+			"messege": constant.MESSAGE_UNKNOWN_ERROR,
 		})
 		return
 	}
@@ -103,16 +104,16 @@ func (nc noteController) UpdateNote(c *gin.Context) {
 		rb.Title,
 		rb.Content,
 	)
-  o, err := nc.updateNoteUseCase.Handle(i)
+	o, err := nc.updateNoteUseCase.Handle(i)
 
-  if err != nil {
-    c.JSON(405, gin.H{
-      "message": err.Error(),
-    })
-    return
-  }
+	if err != nil {
+		c.JSON(405, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
 
-  c.JSON(200, o)
+	c.JSON(200, o)
 }
 
 func (nc noteController) DeleteNote(c *gin.Context) {
@@ -121,9 +122,9 @@ func (nc noteController) DeleteNote(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(500, gin.H{
-			"message": "削除に失敗しました",
+			"message": constant.MESSAGE_UNKNOWN_ERROR,
 		})
-    return
+		return
 	}
 
 	c.JSON(200, o)
