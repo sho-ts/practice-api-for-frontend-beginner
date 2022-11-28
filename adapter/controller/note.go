@@ -45,7 +45,7 @@ func (nc noteController) CreateNote(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(405, gin.H{
-			"messege": err.Error(),
+			"message": err.Error(),
 		})
 		return
 	}
@@ -59,7 +59,7 @@ func (nc noteController) FindByNoteId(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(404, gin.H{
-			"messege": constant.MESSAGE_NOT_FOUND,
+			"message": constant.MESSAGE_NOT_FOUND,
 		})
 		return
 	}
@@ -73,17 +73,17 @@ func (nc noteController) FindAllNote(c *gin.Context) {
 
 	if l_err != nil || o_err != nil {
 		c.JSON(405, gin.H{
-			"messege": constant.MESSAGE_HAS_QUERY_VALUE_PROBLEM,
+			"message": constant.MESSAGE_HAS_QUERY_VALUE_PROBLEM,
 		})
 		return
 	}
 
 	i := input.NewFindAllNoteInput(limit, offset)
-	o, i_err := nc.findAllNoteUseCase.Handle(i)
+	o, o_err := nc.findAllNoteUseCase.Handle(i)
 
-	if i_err != nil {
+	if o_err != nil {
 		c.JSON(500, gin.H{
-			"messege": constant.MESSAGE_UNKNOWN_ERROR,
+			"message": constant.MESSAGE_UNKNOWN_ERROR,
 		})
 		return
 	}
