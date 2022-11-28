@@ -14,6 +14,6 @@ func GetRequiredValidateErrorMessage(key string) string {
 	return key + "は必須です"
 }
 
-func GetMaximumCharVaridateErrorMessage(key string, max int) string {
+func GetMaximumCharValidateErrorMessage(key string, max int) string {
 	return key + "は" + strconv.Itoa(max) + "文字以内である必要があります"
 }

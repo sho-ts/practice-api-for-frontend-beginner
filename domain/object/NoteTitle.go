@@ -17,7 +17,7 @@ func NewNoteTitle(title string) (NoteTitle, error) {
 		return noteTitle, errors.New(constant.GetRequiredValidateErrorMessage("title"))
 	}
 	if utf8.RuneCountInString(title) > 120 {
-		return noteTitle, errors.New(constant.GetMaximumCharVaridateErrorMessage("title", 120))
+		return noteTitle, errors.New(constant.GetMaximumCharValidateErrorMessage("title", 120))
 	}
 
 	noteTitle.Value = title

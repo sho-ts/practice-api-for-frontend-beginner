@@ -24,7 +24,7 @@ paths:
       description: ノートの一覧を取得する
       operationId: findAllNote
       responses:
-        '200':
+        200:
           content:
             application/json:
               schema:
@@ -89,9 +89,9 @@ paths:
                       description: トータル件数
                       type: number
                       example: 100
-        '405':
+        405:
           description: クエリパラメータに問題があります
-        '500':
+        500:
           description: エラーが発生しました
     post:
       tags:
@@ -115,7 +115,7 @@ paths:
                 type: string
                 example: これは本文です。これは本文です。これは本文です。
       responses:
-        '200':
+        200:
           content:
             application/json:
               schema:
@@ -136,8 +136,10 @@ paths:
                   updatedAt:
                     type: string
                     example: 2022-11-25T13:43:14.962Z
-        '405':
+        405:
           description: titleは必須です
+        500:
+          description: エラーが発生しました
   /v1/note/{noteId}:
     get:
       tags:
@@ -152,7 +154,7 @@ paths:
       description: ノートを取得する
       operationId: findByNoteId
       responses:
-        '200':
+        200:
           content:
             application/json:
               schema:
@@ -173,8 +175,10 @@ paths:
                   updatedAt:
                     type: string
                     example: 2022-11-25T13:43:14.962Z
-        '404':
+        404:
           description: コンテンツが見つかりませんでした
+        500:
+          description: エラーが発生しました
     put:
       tags:
         - Note
@@ -202,7 +206,7 @@ paths:
                 type: string
                 example: これは本文です。これは本文です。これは本文です。
       responses:
-        '200':
+        200:
           content:
             application/json:
               schema:
@@ -211,8 +215,10 @@ paths:
                   id:
                     type: string
                     example: DD37959ACDA842E7BCD74899DB4DBB85
-        '405':
+        405:
           description: titleは必須です
+        500:
+          description: エラーが発生しました
     delete:
       tags:
         - Note
@@ -226,7 +232,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        200:
           content:
             application/json:
               schema:
@@ -235,5 +241,5 @@ paths:
                   id:
                     type: string
                     example: DD37959ACDA842E7BCD74899DB4DBB85
-        '500':
+        500:
           description: エラーが発生しました

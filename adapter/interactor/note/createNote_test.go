@@ -1,12 +1,13 @@
 package interactor_test
 
 import (
-	"github.com/stretchr/testify/assert"
-	"note-app/adapter/interactor/note"
+	interactor "note-app/adapter/interactor/note"
 	"note-app/application/constant"
-	"note-app/domain/dto/input/note"
-	"note-app/repository/mock"
+	input "note-app/domain/dto/input/note"
+	repository "note-app/repository/mock"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateNoteInteractor(t *testing.T) {
@@ -55,5 +56,5 @@ func TestCraeteNoteInteractorMaximumTitleValue(t *testing.T) {
 	in := input.NewCreateNoteInput(title, content)
 	_, err := interactor.Handle(in)
 
-	assert.EqualError(t, err, constant.GetMaximumCharVaridateErrorMessage("title", 120))
+	assert.EqualError(t, err, constant.GetMaximumCharValidateErrorMessage("title", 120))
 }
